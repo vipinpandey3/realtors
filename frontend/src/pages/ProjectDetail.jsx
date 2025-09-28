@@ -15,43 +15,16 @@ const ProjectDetail = () => {
       setError(null);
       
       const response = await projectsAPI.getProject(id);
-      // API might return data directly or wrapped in data property
       setProject(response.data.data || response.data);
     } catch (err) {
-      // Only log error if it's not a network error (backend not available)
       if (err.code !== 'ERR_NETWORK') {
         console.error('Error fetching project details:', err);
       }
-      // Don't show error message for network errors, just use fallback data
       if (err.code === 'ERR_NETWORK') {
         console.log('Backend API not available, using mock data for development');
       } else {
         setError('Failed to load project details. Please try again.');
       }
-      
-      // Fallback mock data for testing
-      setProject({
-        id: parseInt(id),
-        name: 'Green Valley Apartments',
-        location: 'Andheri West, Mumbai',
-        price_range: '₹50L - ₹80L',
-        status: 'active',
-        description: 'A premium residential project offering modern amenities and excellent connectivity.',
-        area: '1-3 BHK',
-        possession_date: '2025-12-31',
-        total_units: 250,
-        available_units: 45,
-        amenities: ['Swimming Pool', 'Gym', 'Clubhouse', 'Children\'s Play Area', 'Security'],
-        builder: {
-          id: 1,
-          name: 'ABC Builders',
-          headquarters: 'Mumbai, Maharashtra',
-          established_year: 1995,
-          description: 'Leading real estate developer with 25+ years of experience in residential and commercial projects.',
-          total_projects: 50,
-          completed_projects: 45
-        }
-      });
     } finally {
       setLoading(false);
     }
@@ -120,6 +93,11 @@ const ProjectDetail = () => {
       <div className="detail-section">
         <h2>Project Information</h2>
         <div className="detail-grid">
+          <div className="detail-item">
+            <span className="detail-label">Name</span>
+            <span className="detail-value">{project.name}</span>
+          </div>
+
           <div className="detail-item">
             <span className="detail-label">Location</span>
             <span className="detail-value">{project.location}</span>
