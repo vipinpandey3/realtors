@@ -34,7 +34,6 @@ export async function get_projects(req_query: any) {
   try {
     const { limit, offset } = page(req_query.limit, req_query.offset);
 
-    // build filters
     const where: WhereOptions = {};
     if (req_query.location)
       where["location"] = { [Op.iLike]: `%${req_query.location}%` };

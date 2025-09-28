@@ -18,13 +18,27 @@ export default function (passport: passport.PassportStatic) {
   passport.use(
     "login-custom",
     new CustomStrategy(async (req: any, done: any) => {
+      const reqBody = req.body;
       try {
+        if (!reqBody.uuid) {
+          throw new Error("Request does not have uuid");
+        }
+        const builder = await models.Builder.findOne({
+          where: { name: reqBody.name },
+          atttributes: ["id", "name", "hq_location", "established_year"],
+        });
+        logger.info("Builder", builder);
+        if (!builder) {
+          throw new Error("No builder found");
+        }
+        const data = JSON.parse(JSON.stringify({ builder }));
         return done(null, {
           jwt: jwt.sign(
             {
               data: {
-                id: "user_id_12345",
-                email: "abc@realtors.com",
+                builder_id: builder.id,
+                name: builder.name,
+                location: builder.hq_location,
               },
             },
             config.JWT_SIGNING_KEY,
@@ -34,10 +48,7 @@ export default function (passport: passport.PassportStatic) {
               expiresIn: "1d",
             }
           ),
-          data: {
-            id: "user_id_12345",
-            email: "abc@realtors.com",
-          },
+          data: data,
           status: true,
         });
       } catch (error) {

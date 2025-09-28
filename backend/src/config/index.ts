@@ -26,9 +26,6 @@ interface Config {
   UPLOAD_FOLDER_PATH: string;
 
   IS_PRODUCTION_ENVIRONMENT: () => boolean;
-  cors: {
-    origin: string;
-  };
   logLevel: string;
 }
 
@@ -57,9 +54,6 @@ const config: Config = {
   UPLOAD_FOLDER_PATH: process.env.UPLOAD_FOLDER_PATH || "",
 
   IS_PRODUCTION_ENVIRONMENT: () => process.env.ENVIRONMENT === "PRODUCTION",
-  cors: {
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
-  },
   logLevel: process.env.LOG_LEVEL || "info",
 };
 
