@@ -25,8 +25,8 @@ This project is divided into two main folders: `backend` and `frontend`.
 
 Below are screenshots showing the project structure and UI:
 
-![Project Structure](Screenshot%202025-09-28%20at%205.16.37%E2%80%AFPM.png)
-![UI Example](Screenshot%202025-09-28%20at%205.16.49%E2%80%AFPM.png)
+![Project Structure](image_2.png)
+![UI Example](image.png)
 
 ---
 
